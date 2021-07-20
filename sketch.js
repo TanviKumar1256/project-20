@@ -21,17 +21,17 @@ function setup(){
     garden = createSprite(480,300,1000,800);
     garden.addImage("bg", gardenImg);
 
-    cat = createSprite(800,480,40,20);
+    cat = createSprite(800,480,10,20);
     cat.addImage("catSit", catImg);
     
-    cat.addAnimation("catRun", catRunning);
+    //cat.addAnimation("catRun", catRunning);
     cat.scale=0.2;
     cat.setCollider("rectangle",0,0,1000,1000)
 
     mouse = createSprite(130,510,20,10);
     mouse.addImage("mouseSit", mouseImg);
-    mouse.addImage("mouseD", mouseHappy);
-    mouse.addAnimation("mouseTease", mouseTeasing);
+    //mouse.addImage("mouseD", mouseHappy);
+    //mouse.addAnimation("mouseTease", mouseTeasing);
     mouse.scale=0.1;
     mouse.setCollider("rectangle",0,0,1000,1000)
 }
@@ -42,12 +42,11 @@ function draw() {
     mouse.debug = true;
     background(0);
     //Write condition here to evalute if tom and jerry collide
-     if(cat.x - mouse.x < cat.width/2 + mouse.width/2
-        && mouse.x - cat.x < mouse.width/2 + cat.width/2){
-    //    cat.addImage("catD", catHappy);
-    //    cat.changeAnimation("catD");
-    //    cat.velocityX=0;
-    //    mouse.changeAnimation("mouseD")
+     if(cat.x - mouse.x < (cat.width + mouse.width)/2){
+       cat.addImage("catD", catHappy);
+       cat.changeAnimation("catD");
+       cat.velocityX=0;
+       mouse.changeAnimation("mouseD")
     }
 
     drawSprites();
@@ -58,8 +57,10 @@ function keyPressed(){
 
   //For moving and changing animation write code here
   if(keyCode === LEFT_ARROW){
+      mouse.addImage("mouseD", mouseHappy);
       mouse.changeAnimation("mouseTease");
       mouse.frameDelay = 15;
+      cat.addAnimation("catRun", catRunning);
       cat.changeAnimation("catRun");
       cat.frameDelay = 10;
       cat.velocityX=-2;
